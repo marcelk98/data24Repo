@@ -20,7 +20,6 @@ df_3 = pd.read_csv(s3_object_3['Body'])
 all_frames = [df_1, df_2, df_3]
 comb = pd.concat(all_frames)
 
-
 #extracting the average values for each category based on 'species' using the new 'comb' dataframe
 avg_weight = comb.groupby('Species').Weight.mean()
 avg_length1 = comb.groupby('Species').Length1.mean()
