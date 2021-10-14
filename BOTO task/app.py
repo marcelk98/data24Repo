@@ -34,5 +34,3 @@ data = [avg_width,avg_weight,avg_length1,avg_length2,avg_length3,avg_height]
 def exporting_to_csv():
     data_comb = pd.concat(data).to_csv('marcel_fish.csv')
     return data_comb
-
-
