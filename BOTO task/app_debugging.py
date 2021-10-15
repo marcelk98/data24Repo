@@ -3,7 +3,7 @@ from pathlib import Path
 from app import *
 
 
-#creating a debug test which will confirm .csv file's existance with the data
+#creating a debug test which will confirm .csv file's existance containing the data
 def testing_file_creation(file):
     try:
         my_path = Path(file).resolve(strict=True)
