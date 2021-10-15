@@ -2,14 +2,23 @@
 import boto3
 import pandas as pd
 
-#specifying which S3 bucket will be used along wiht the S3 client
-bucket_name = 'data-eng-resources'
-s3_client = boto3.client('s3')
+
+#function to connect to the S3 bucket
+def s3_bucket_connection(bucket_name):
+    bucket_name = bucket_name
+    return bucket_name
+
+
+#function to connect to the S3 client
+def s3_client_connection(s3_client):
+    s3_client = s3_client
+    return s3_client
+
 
 #assigning S3 objects to variables for each of the files
-s3_object_1 = s3_client.get_object(Bucket=bucket_name, Key='python/fish-market.csv')
-s3_object_2 = s3_client.get_object(Bucket=bucket_name, Key='python/fish-market-tues.csv')
-s3_object_3 = s3_client.get_object(Bucket=bucket_name, Key='python/fish-market-mon.csv')
+s3_object_1 = s3_client_connection(boto3.client('s3')).get_object(Bucket=s3_bucket_connection('data-eng-resources'), Key='python/fish-market.csv')
+s3_object_2 = s3_client_connection(boto3.client('s3')).get_object(Bucket=s3_bucket_connection('data-eng-resources'), Key='python/fish-market-tues.csv')
+s3_object_3 = s3_client_connection(boto3.client('s3')).get_object(Bucket=s3_bucket_connection('data-eng-resources'), Key='python/fish-market-mon.csv')
 
 #creating a dataframe for each of the files bodies
 df_1 = pd.read_csv(s3_object_1['Body'])
@@ -28,9 +37,13 @@ avg_length3 = comb.groupby('Species').Length3.mean()
 avg_height = comb.groupby('Species').Height.mean()
 avg_width = comb.groupby('Species').Width.mean()
 
-data = [avg_width,avg_weight,avg_length1,avg_length2,avg_length3,avg_height]
+main_df = [avg_width,avg_weight,avg_length1,avg_length2,avg_length3,avg_height]
+
 
 #function for extracting the data as a .csv file
-def exporting_to_csv():
-    data_comb = pd.concat(data).to_csv('marcel_fish.csv')
+def exporting_to_csv(data,file):
+    data_comb = pd.concat(data).to_csv(file)
     return data_comb
+
+
+
